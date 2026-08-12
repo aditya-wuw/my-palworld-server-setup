@@ -10,20 +10,26 @@ services:
       - PUID=1000
       - PGID=1000
       - PORT=8211
-      - PLAYERS=16
-      - SERVER_NAME="PongoPal Island"
+      - PLAYERS=8
+      - SERVER_NAME=PongoPal Island
+      - SERVER_PASSWORD=${SERVER_PASS}
+      - ADMIN_PASSWORD=${SERVER_ADMIN_PASS}
     volumes:
       - ./palworld:/palworld/
     networks:
-      - game-net
-  localtonet:
-    image: localtonet/localtonet
-    container_name: localtonet
+      game-net:
+        ipv4_address: 172.25.0.5
+  playit:
+    image: ghcr.io/playit-cloud/playit-agent:1.0
+    container_name: playit
     restart: unless-stopped
-    command: --authtoken ${LOCALTONET_AUTH_TOKEN}
-    networks:
-      - game-net
+    environment:
+      - SECRET_KEY=${PLAY_IT_SECRET_KEY}
+    network_mode: host
 
 networks:
   game-net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
