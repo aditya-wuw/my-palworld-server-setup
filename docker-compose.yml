@@ -1,0 +1,29 @@
+services:
+  palworld:
+    image: thijsvanloef/palworld-server-docker:latest
+    container_name: palworld-server
+    restart: unless-stopped
+    ports:
+      - "8211:8211/udp"
+      - "27015:27015/udp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - PORT=8211
+      - PLAYERS=16
+      - SERVER_NAME="PongoPal Island"
+    volumes:
+      - ./palworld:/palworld/
+    networks:
+      - game-net
+  localtonet:
+    image: localtonet/localtonet
+    container_name: localtonet
+    restart: unless-stopped
+    command: --authtoken ${LOCALTONET_AUTH_TOKEN}
+    networks:
+      - game-net
+
+networks:
+  game-net:
+    driver: bridge
