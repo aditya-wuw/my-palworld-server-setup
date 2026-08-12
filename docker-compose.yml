@@ -14,6 +14,11 @@ services:
       - SERVER_NAME=PongoPal Island
       - SERVER_PASSWORD=${SERVER_PASS}
       - ADMIN_PASSWORD=${SERVER_ADMIN_PASS}
+      # - UPDATE_ON_BOOT=false
+      # only run this for the 1st time get download the latest version
+      - UPDATE_ON_BOOT=True
+      - BACKUP_ENABLED=true
+      - BACKUP_CRON_EXPRESSION=*/30 * * * *
     volumes:
       - ./palworld:/palworld/
     networks:
