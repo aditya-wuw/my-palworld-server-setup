@@ -6,28 +6,32 @@ export const Commands = (client: Client) => {
     if (!interaction.isChatInputCommand()) return;
 
     // /ip command
-    if (
-      interaction.commandName.trim().toLocaleLowerCase() ===
-      CommandsRegistry.ip.CMD.trim().toLocaleLowerCase()
-    ) {
+    if (interaction.commandName === CommandsRegistry.ip.CMD) {
       await interaction.reply(
-        "💻**Ip:** pal.smgcat.site:11322, **Password:**smugcat",
+        "💻 **Ip:** pal.smgcat.site:11322, **Password:** smugcat",
       );
     }
+    // /help command
+    if (interaction.commandName === CommandsRegistry.help.CMD) {
+      await interaction.reply(CommandsRegistry.help.Description);
+    }
+    // /ping command
+    if (interaction.commandName === CommandsRegistry.ping.CMD) {
+      await interaction.reply("✅ Ok 200");
+    }
 
+    /*Admin commands*/
     // /backup command
-    if (
-      interaction.commandName.trim().toLocaleLowerCase() ===
-      CommandsRegistry.backup.CMD.trim().toLocaleLowerCase()
-    ) {
+    if (interaction.commandName === CommandsRegistry.backup.CMD) {
       await interaction.reply("🛑 Backup apis are under development");
     }
-    // /help command
-    if (
-      interaction.commandName.trim().toLocaleLowerCase() ===
-      CommandsRegistry.help.CMD.trim().toLocaleLowerCase()
-    ) {
-      await interaction.reply(CommandsRegistry.help.Description);
+    // /restart command
+    if (interaction.commandName === CommandsRegistry.restart.CMD) {
+      await interaction.reply("setup required");
+    }
+    // /ignore command
+    if (interaction.commandName === CommandsRegistry.ignore.CMD) {
+      await interaction.reply("setup required");
     }
   });
 };

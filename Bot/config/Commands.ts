@@ -28,15 +28,34 @@ export const CommandsRegistry = {
     Description:
       "/ip - get server ip information\n/backup - to trigger a ondemand backup\n/help - command details",
   },
+  ping: {
+    CMD: "ping",
+    Description: "ping the bot for testing",
+  },
+  restart: {
+    CMD: "restart",
+    Description: "Restart the server on demand",
+  },
+  ignore: {
+    CMD: "ignore",
+    Description: "Admin command to whitelist users",
+  },
 };
 
+//register commands
 export const commands = [
   NewCommand(CommandsRegistry.ip.CMD, CommandsRegistry.ip.Description),
   NewCommand(CommandsRegistry.backup.CMD, CommandsRegistry.backup.Description),
   NewCommand(CommandsRegistry.help.CMD, CommandsRegistry.help.Description),
+  NewCommand(CommandsRegistry.ping.CMD, CommandsRegistry.ping.Description),
+  NewCommand(
+    CommandsRegistry.restart.CMD,
+    CommandsRegistry.restart.Description,
+  ),
+  NewCommand(CommandsRegistry.ignore.CMD, CommandsRegistry.ignore.Description),
 ].map((command) => command);
 
-//register commands
+//register commands to discord
 const rest = new REST({ version: "10" }).setToken(
   process.env.DISCORD_BOT_TOKEN as string,
 );

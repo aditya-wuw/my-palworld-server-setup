@@ -27,7 +27,7 @@ client.once("clientReady", () => {
       "Channel not found, please configure a correct Channel ID",
     );
   // Channel.send("Hi Test 1234 connection test!!");
-  Channel.send("🛑Server is currently Offline");
+  Channel.send("🛑 Server is currently Offline");
 });
 
 /*Port assignment*/
