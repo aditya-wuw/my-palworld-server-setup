@@ -3,17 +3,17 @@
 #simple shorthand run scripts
 
 case "$1" in
-    d-up)
+    up)
         docker compose up -d
         ;;
-    server-logs)
+    logs)
         docker logs -f palworld-server
         ;;
-    d-down)
+    down)
         docker compose down
         ;;
     *)
-        echo "Invalid command; (e.g.) : " ./r.sh d-up "  <- starts the containers"
+        echo "Invalid command; (e.g.) : ./r.sh up <- starts the containers"
         exit 1
         ;;
 esac

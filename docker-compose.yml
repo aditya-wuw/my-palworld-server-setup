@@ -1,4 +1,10 @@
 services:
+  backup-api:
+    build: ./BackupAPI
+    container_name: server-backup-api
+    volumes:
+      - "./palworld/backups:/backups"
+
   palworld:
     image: thijsvanloef/palworld-server-docker:latest
     container_name: palworld-server
