@@ -1,10 +1,15 @@
 services:
-  backup-api:
-    build: ./BackupAPI
-    container_name: server-backup-api
-    volumes:
-      - "./palworld/backups:/backups"
-
+  # backup-api:
+  #   build: ./BackupAPI
+  #   container_name: server-backup-api
+  #   volumes:
+  #     - "./palworld/backups:/backups"
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - UPLOAD_PATH=${UPLOAD_END_POINT}
+  #   networks:
+  #     - game-net
   palworld:
     image: thijsvanloef/palworld-server-docker:latest
     container_name: palworld-server
@@ -24,7 +29,7 @@ services:
       # only run this for the 1st time get download the latest version
       #- UPDATE_ON_BOOT=True
       - BACKUP_ENABLED=true
-      - BACKUP_CRON_EXPRESSION=*/30 * * * *
+      - BACKUP_CRON_EXPRESSION=*/120 * * * *
     volumes:
       - ./palworld:/palworld/
     networks:

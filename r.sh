@@ -4,7 +4,7 @@
 
 case "$1" in
     up)
-        docker compose up -d
+        docker compose up -d --build
         ;;
     logs)
         docker logs -f palworld-server

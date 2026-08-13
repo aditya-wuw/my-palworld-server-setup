@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run:backupAPI": "node src/index.ts"
+    "run:backupAPI": "node index.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,8 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "chokidar": "^5.0.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   }
 }
