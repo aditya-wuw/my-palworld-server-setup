@@ -1,4 +1,4 @@
-# Setup
+# Server Setup
 
 here are the steps to follow
 
@@ -14,7 +14,7 @@ here are the steps to follow
    - Check Server logs: `docker logs -f palworld-server`
    - Check Playit.gg logs: `docker logs -f playit`
    - Stop/Terminate : `docker compose down`
-  shorthand scripts using pnpm packagemanager
+     shorthand scripts using pnpm packagemanager
 
 ## .env file setup
 
@@ -23,3 +23,11 @@ PLAY_IT_SECRET_KEY=your playit gg secret key
 SERVER_ADMIN_PASS= your server admin password
 SERVER_PASS= your server password
 ```
+
+# Bot & uploade setup guide
+
+## Google drive setup
+
+1.  go to googe cloud console and enable Google Drive API
+2.  Create a service account from and click on Key tab ad generate a Key ( it downloads the json with all your credentials)
+3.  Rename the file to `service-account-key.json` and keep it in your the root of `/Bot` folder.
