@@ -9,7 +9,7 @@ export const file = fs;
 const app: Express = express();
 const PORT: number = 3000;
 
-console.log(`endpoint :${process.env.UPLOAD_PATH}/api/backup`);
+console.log(`Bot Backup Endpoint set to:${process.env.UPLOAD_PATH}/api/backup`);
 FolderWatcher();
 app.use("/v1", Routes);
 app.listen(PORT, () => {

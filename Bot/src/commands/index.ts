@@ -1,10 +1,10 @@
 import type { Client } from "discord.js";
-import { CommandsRegistry } from "../../config/Commands.ts";
+import { CommandsRegistry } from "../../config/CmdConfig.ts";
 
 export const Commands = (client: Client) => {
   client.on("interactionCreate", async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
-
+    
     // /ip command
     if (interaction.commandName === CommandsRegistry.ip.CMD) {
       await interaction.reply(
