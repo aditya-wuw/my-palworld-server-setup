@@ -8,6 +8,8 @@ services:
       - "3000:3000"
     environment:
       - UPLOAD_PATH=${BACKUP_UPLOAD_END_POINT}
+      - API_PORT=${SERVER_API_PORT}
+      - PASSWORD=${SERVER_ADMIN_PASS}
     networks:
       - game-net
   palworld:
@@ -17,11 +19,14 @@ services:
     ports:
       - "8211:8211/udp"
       - "27015:27015/udp"
+      - "8212:8212/tcp"
     environment:
       - PUID=1000
       - PGID=1000
       - PORT=8211
       - PLAYERS=8
+      - REST_API_ENABLED=true # <-- Enable the API
+      - REST_API_PORT=${SERVER_API_PORT}
       - SERVER_NAME=PongoPal Island
       - SERVER_PASSWORD=${SERVER_PASS}
       - ADMIN_PASSWORD=${SERVER_ADMIN_PASS}

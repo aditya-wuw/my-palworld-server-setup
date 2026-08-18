@@ -15,7 +15,7 @@ const ip = async (interaction: ChatInputCommandInteraction<CacheType>) => {
     .setColor(0x0099ff)
     .setTitle("📟 Server Connection")
     .setDescription(
-      `current server version is **${server.version}** make sure your game client is has the same version, here are the server connection information\n` +
+      `current server version is **${server.version}** make sure your game client has the same version, here are the server connection information\n` +
         "### 💻 **Ip**\n" +
         `> ${server.ip}\n` +
         "### 🔑 **Password**\n" +

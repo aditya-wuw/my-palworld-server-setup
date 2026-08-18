@@ -17,9 +17,19 @@ export const Commands = (client: Client) => {
       await CommandsRegistry[CommandKey].Exec(interaction);
     } catch (e) {
       console.error(`Something went wrong, Error:${e}`);
-      await interaction.reply(
-        "Failed to reply, Attentioned needed @_johan_lee_",
-      );
+      try {
+        const errorMsg = "❌ Failed to reply, Attention needed";
+        if (interaction.deferred || interaction.replied) {
+          await interaction.followUp({ content: errorMsg, ephemeral: true });
+        } else {
+          await interaction.reply({ content: errorMsg, ephemeral: true });
+        }
+      } catch (replyError) {
+        console.error(
+          "Could not send failure response to interaction:",
+          replyError,
+        );
+      }
     }
   });
 };

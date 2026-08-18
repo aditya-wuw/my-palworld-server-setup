@@ -8,6 +8,9 @@ import {
 } from "discord.js";
 import help from "./cmds/help.ts";
 import ip from "./cmds/ip.ts";
+import players from "./cmds/players.ts";
+import status from "./cmds/status.ts";
+import save from "./cmds/save.ts";
 
 /*Register Commands*/
 export const CommandsRegistry = {
@@ -17,12 +20,11 @@ export const CommandsRegistry = {
     Exec: async (interaction: ChatInputCommandInteraction<CacheType>) =>
       ip(interaction),
   },
-  backup: {
-    CMD: "backup",
-    Description: "Backs up the World file to google drive",
-    Exec: async (interaction: ChatInputCommandInteraction<CacheType>) => {
-      await interaction.reply("On demand backup is not enabled");
-    },
+  save: {
+    CMD: "save",
+    Description: "trigger an on demand save",
+    Exec: async (interaction: ChatInputCommandInteraction<CacheType>) =>
+      save(interaction),
   },
   help: {
     CMD: "help",
@@ -33,16 +35,14 @@ export const CommandsRegistry = {
   status: {
     CMD: "status",
     Description: "Check the server status",
-    Exec: async (interaction: ChatInputCommandInteraction<CacheType>) => {
-      await interaction.reply("🛑 Server currently Offline");
-    },
+    Exec: async (interaction: ChatInputCommandInteraction<CacheType>) =>
+      status(interaction),
   },
   players: {
     CMD: "players",
     Description: "check the player list",
-    Exec: async (interaction: ChatInputCommandInteraction<CacheType>) => {
-      await interaction.reply("🛑 players api is not configured");
-    },
+    Exec: async (interaction: ChatInputCommandInteraction<CacheType>) =>
+      players(interaction),
   },
   ignore: {
     CMD: "ignore",
