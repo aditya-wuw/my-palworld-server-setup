@@ -4,10 +4,9 @@ import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 // import { Routes } from "./src/api/UploadBackup.ts";
 import { Commands } from "./src/commands/index.ts";
 import morgan from "morgan";
-import { Router } from "express";
+import { Routes } from "./src/api/api.backup.ts";
 
 export const app: Express = express();
-export const Routes = Router();
 
 /*Discord client*/
 const CHANNEL_ID = process.env.CHANNEL_ID as string;
