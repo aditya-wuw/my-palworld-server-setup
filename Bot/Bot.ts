@@ -25,7 +25,7 @@ const limiter = rateLimit({
 });
 app.use(morgan("dev"));
 app.use(limiter);
-const PORT: number = Number(process.env.PORT)
+const PORT: number = Number(process.env.PORT);
 export const SERVER_API =
   process.env.SERVER_BACKUP_API_ENDPOINT || "http://localhost:1000/v1";
 export const SHARED_SIGNATURE = process.env.SHARED_CLIENT_SIGNATURE;
@@ -35,13 +35,11 @@ const CHANNEL_ID = process.env.CHANNEL_ID as string;
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
 });
-Commands(client);
 client
   .login(process.env.DISCORD_BOT_TOKEN as string)
   .then(() => console.log("Gateway login call initiated."))
-  .catch((err) =>
-    console.error("CRITICAL: Failed to login to Discord ->", err),
-  );
+  .catch((err) => console.error("Failed to login to Discord ->", err));
+Commands(client);
 
 /*routes*/
 app.use(Health);
