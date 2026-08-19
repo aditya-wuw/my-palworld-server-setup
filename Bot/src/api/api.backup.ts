@@ -5,6 +5,7 @@ import multer from "multer";
 import { SendResponse } from "../utils/Utils.ts";
 import { Router } from "express";
 import { CheckSignature } from "../middleware.ts";
+import { SendMessage } from "../../Bot.ts";
 
 export const Routes = Router();
 const Folder = process.env.DRIVE_FOLDER as string;
@@ -39,6 +40,7 @@ Routes.post(
           "Failed to upload backup file to google drive",
         );
       await fs.promises.unlink(UploadedFile.path);
+      SendMessage("✅ Backup file Uploaded to Google drive", true);
       return SendResponse(res, 200, true, "File Uploaded to google drive");
     } catch (e) {
       console.error(`somthing went wrong while handling backup upload, : ${e}`);

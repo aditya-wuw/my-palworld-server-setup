@@ -1,6 +1,11 @@
 import "dotenv/config";
 import express, { type Express, type Request, type Response } from "express";
-import { Client, GatewayIntentBits, TextChannel } from "discord.js";
+import {
+  Client,
+  EmbedBuilder,
+  GatewayIntentBits,
+  TextChannel,
+} from "discord.js";
 // import { Routes } from "./src/api/UploadBackup.ts";
 import { Commands } from "./src/commands/index.ts";
 import morgan from "morgan";
@@ -25,14 +30,23 @@ client.login(process.env.DISCORD_BOT_TOKEN as string);
 /*routes*/
 app.use("/api", CheckSignature, Routes);
 
-/*Discord client*/
-client.once("clientReady", () => {
-  const Channel = client.channels.cache.get(CHANNEL_ID) as TextChannel;
-  if (!Channel)
-    return console.error(
-      "Channel not found, Bot may not be in the Server or have a correct Channel ID",
-    );
-});
+export const SendMessage = async (msg: string, success: boolean) => {
+  /*Discord client*/
+  try {
+    const Channel = (await client.channels.fetch(CHANNEL_ID)) as TextChannel;
+    if (!Channel)
+      return console.error(
+        "Channel not found, Bot may not be in the Server or have a correct Channel ID",
+      );
+    const embed = new EmbedBuilder()
+      .setColor(success ? 0x57f287 : 0xff0000)
+      .setTitle("Notification")
+      .setDescription(msg);
+    await Channel.send({ embeds: [embed] });
+  } catch (e) {
+    console.error(`Failed to send message, Error: ${e}`);
+  }
+};
 
 app.listen(PORT, () => {
   console.log(`Bot running on Port :${PORT}`);
