@@ -1,3 +1,5 @@
+Before following the steps make sure you have generated a string 32bit hex string and assign them in your Bot's env file and the Server's env file to `SHARED_CLIENT_SIGNATURE`
+
 # Server Setup
 
 This is the guide to setup the server docker container

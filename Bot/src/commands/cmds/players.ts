@@ -4,6 +4,7 @@ import {
   type ChatInputCommandInteraction,
 } from "discord.js";
 import { SERVER_API } from "../../../Bot.ts";
+import getHeaders from "../../Headers.ts";
 
 interface FilteredPlayersType {
   name: string;
@@ -12,7 +13,9 @@ interface FilteredPlayersType {
 }
 
 const players = async (interaction: ChatInputCommandInteraction<CacheType>) => {
-  const response = await fetch(`${SERVER_API}/getplayers`);
+  const response = await fetch(`${SERVER_API}/getplayers`, {
+    headers: getHeaders("GET", "/getstatus"),
+  });
   if (!response.ok)
     return await interaction.reply(
       `❌ Failed to get any player data [${response.status}]`,

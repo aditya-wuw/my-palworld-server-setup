@@ -1,6 +1,7 @@
 import chokidar from "chokidar";
 import { file } from "../index.ts";
 import path from "node:path";
+import getHeaders from "./Headers.ts";
 
 export const FolderWatcher = () => {
   const Dir = "/backups";
@@ -36,6 +37,7 @@ const UploadAndDelete = async (filepath: string) => {
     formdata.append("file", new Blob([Filedata]), FileName);
 
     const res = await fetch(`${UploadEndPoint}/api/backup`, {
+      headers: getHeaders("POST", "/api/backup"),
       method: "POST",
       body: formdata,
     });

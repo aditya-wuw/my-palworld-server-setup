@@ -1,4 +1,4 @@
-import type { Client } from "discord.js";
+import { EmbedBuilder, type Client } from "discord.js";
 import { CommandsRegistry } from "./Config.ts";
 
 type CommandType = keyof typeof CommandsRegistry;
@@ -18,11 +18,15 @@ export const Commands = (client: Client) => {
     } catch (e) {
       console.error(`Something went wrong, Error:${e}`);
       try {
-        const errorMsg = "❌ Failed to reply, Attention needed";
+        const embed = new EmbedBuilder()
+          .setColor(0xff0000)
+          .setTitle("🖥 Server status")
+          .setDescription(`❌ Server Offline try again later`);
+
         if (interaction.deferred || interaction.replied) {
-          await interaction.followUp({ content: errorMsg, ephemeral: true });
+          await interaction.followUp({ embeds: [embed] });
         } else {
-          await interaction.reply({ content: errorMsg, ephemeral: true });
+          await interaction.reply({ embeds: [embed] });
         }
       } catch (replyError) {
         console.error(

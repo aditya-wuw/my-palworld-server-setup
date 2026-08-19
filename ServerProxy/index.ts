@@ -2,22 +2,27 @@ import "dotenv/config";
 import express, { type Express, type Request, type Response } from "express";
 import { Routes } from "./src/Routes.ts";
 import { rateLimit } from "express-rate-limit";
+import morgan from "morgan";
 
 import fs from "fs/promises";
 import { FolderWatcher } from "./src/Watcher.ts";
+import { CheckSignature } from "./src/middleware.ts";
 export const file = fs;
 const app: Express = express();
 const PORT: number = 3000;
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-  standardHeaders: "draft-8", // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  windowMs: 10 * 60 * 1000, // 15 minutes
+  limit: 50,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
   ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
 });
 app.use(limiter);
+app.use(morgan("dev"));
 
+
+export const SHARED_SIGNATURE = process.env.SHARED_SIGNATURE;
 /**
  * Port configuration
  */
@@ -35,7 +40,7 @@ if (!process.env.UPLOAD_PATH) {
   FolderWatcher();
 }
 
-app.use("/v1", Routes);
+app.use("/v1", CheckSignature, Routes);
 app.listen(PORT, () => {
   console.log(`listenting to ${PORT}`);
 });

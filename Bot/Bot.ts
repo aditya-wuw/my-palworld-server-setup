@@ -5,12 +5,14 @@ import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import { Commands } from "./src/commands/index.ts";
 import morgan from "morgan";
 import { Routes } from "./src/api/api.backup.ts";
+import { CheckSignature } from "./src/middleware.ts";
 
 export const app: Express = express();
 app.use(morgan("dev"));
+const PORT: number = 1000;
 export const SERVER_API =
   process.env.SERVER_BACKUP_API_ENDPOINT || "http://localhost:1000/v1";
-const PORT: number = 1000;
+export const SHARED_SIGNATURE = process.env.SHARED_CLIENT_SIGNATURE;
 
 /*Discord client*/
 const CHANNEL_ID = process.env.CHANNEL_ID as string;
@@ -20,8 +22,8 @@ const client = new Client({
 Commands(client);
 client.login(process.env.DISCORD_BOT_TOKEN as string);
 
-/*Api routes*/
-app.use("/api", Routes);
+/*routes*/
+app.use("/api", CheckSignature, Routes);
 
 /*Discord client*/
 client.once("clientReady", () => {
@@ -32,7 +34,6 @@ client.once("clientReady", () => {
     );
 });
 
-/*Port assignment*/
 app.listen(PORT, () => {
-  console.log(`bot running on Port :${PORT}`);
+  console.log(`Bot running on Port :${PORT}`);
 });

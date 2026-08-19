@@ -1,13 +1,16 @@
 import {
-  EmbedBuilder,
+  MessageFlags,
   type CacheType,
   type ChatInputCommandInteraction,
 } from "discord.js";
 import { SERVER_API } from "../../../Bot.ts";
+import getHeaders from "../../Headers.ts";
 
 const save = async (interaction: ChatInputCommandInteraction<CacheType>) => {
   await interaction.deferReply();
-  const response = await fetch(`${SERVER_API}/save`);
+  const response = await fetch(`${SERVER_API}/save`, {
+    headers: getHeaders("GET", "/getstatus"),
+  });
   if (!response.ok)
     return await interaction.editReply(
       `❌ Failed to trigger save [${response.status}]`,

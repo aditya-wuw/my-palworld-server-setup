@@ -4,6 +4,7 @@ import {
   type ChatInputCommandInteraction,
 } from "discord.js";
 import { SERVER_API } from "../../../Bot.ts";
+import getHeaders from "../../Headers.ts";
 
 interface FilteredPlayersType {
   name: string;
@@ -13,7 +14,9 @@ interface FilteredPlayersType {
 }
 
 const status = async (interaction: ChatInputCommandInteraction<CacheType>) => {
-  const response = await fetch(`${SERVER_API}/getstatus`);
+  const response = await fetch(`${SERVER_API}/getstatus`, {
+    headers: getHeaders("GET", "/getstatus"),
+  });
   if (!response.ok) {
     const errorData = await response.json();
     const embed = new EmbedBuilder()

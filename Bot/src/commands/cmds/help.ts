@@ -11,8 +11,8 @@ const help = async (interaction: ChatInputCommandInteraction<CacheType>) => {
     .setDescription(
       "### 💻 /ip\n" +
         "> Get server IP address and password\n" +
-        "### 💾 /backup\n" +
-        "> Trigger an on-demand world backup\n" +
+        "### 💾 /save\n" +
+        "> Trigger an on-demand world save\n" +
         "### 🟢 /status\n" +
         "> Check if the game server is online\n" +
         "### 👥 /players\n" +

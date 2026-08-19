@@ -1,7 +1,7 @@
 services:
-  backup-api:
-    build: ./BackupAPI
-    container_name: server-backup-api
+  proxy-api:
+    build: ./ServerProxy
+    container_name: server-proxy-api
     volumes:
       - "./palworld/backups:/backups"
     ports:
@@ -10,6 +10,7 @@ services:
       - UPLOAD_PATH=${BACKUP_UPLOAD_END_POINT}
       - API_PORT=${SERVER_API_PORT}
       - PASSWORD=${SERVER_ADMIN_PASS}
+      - SHARED_SIGNATURE=${SHARED_CLIENT_SIGNATURE}
     networks:
       - game-net
   palworld:
