@@ -3,6 +3,7 @@ import express, { type Express, type Request, type Response } from "express";
 import {
   Client,
   EmbedBuilder,
+  Events,
   GatewayIntentBits,
   TextChannel,
 } from "discord.js";
@@ -35,11 +36,20 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds],
 });
 Commands(client);
-client.login(process.env.DISCORD_BOT_TOKEN as string);
+client
+  .login(process.env.DISCORD_BOT_TOKEN as string)
+  .then(() => console.log("Gateway login call initiated."))
+  .catch((err) =>
+    console.error("CRITICAL: Failed to login to Discord ->", err),
+  );
 
 /*routes*/
 app.use(Health);
 app.use("/api", CheckSignature, Routes);
+
+client.once(Events.ClientReady, (readyClient) => {
+  console.log(`Logged in as ${readyClient.user.tag}! Bot is now active.`);
+});
 
 export const SendMessage = async (msg: string, success: boolean) => {
   /*Discord client*/
