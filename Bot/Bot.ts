@@ -24,7 +24,7 @@ const limiter = rateLimit({
 });
 app.use(morgan("dev"));
 app.use(limiter);
-const PORT: number = 1000;
+const PORT: number = Number(process.env.PORT) || 1000;
 export const SERVER_API =
   process.env.SERVER_BACKUP_API_ENDPOINT || "http://localhost:1000/v1";
 export const SHARED_SIGNATURE = process.env.SHARED_CLIENT_SIGNATURE;
