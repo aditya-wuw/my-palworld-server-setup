@@ -18,9 +18,10 @@ const limiter = rateLimit({
   legacyHeaders: false,
   ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
 });
+
 app.use(limiter);
 app.use(morgan("dev"));
-
+app.set("trust proxy", 1);
 
 export const SHARED_SIGNATURE = process.env.SHARED_SIGNATURE;
 /**
@@ -39,6 +40,10 @@ if (!process.env.UPLOAD_PATH) {
   console.log(`Upload endpoint set to :${process.env.UPLOAD_PATH}`);
   FolderWatcher();
 }
+
+app.get("/", async (_, res: Response) => {
+  return res.send("Palworld proxy server running ...");
+});
 
 app.use("/v1", CheckSignature, Routes);
 app.listen(PORT, () => {

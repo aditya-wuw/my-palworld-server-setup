@@ -4,7 +4,6 @@ import fs from "node:fs";
 import multer from "multer";
 import { SendResponse } from "../utils/Utils.ts";
 import { Router } from "express";
-import { CheckSignature } from "../middleware.ts";
 import { SendMessage } from "../../Bot.ts";
 
 export const Routes = Router();

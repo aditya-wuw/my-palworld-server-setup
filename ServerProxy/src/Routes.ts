@@ -4,9 +4,6 @@ import { Router } from "express";
 import { Auth, ServerEndPoint } from "../index.ts";
 
 export const Routes = Router();
-Routes.get("/", async (req: Request, res: Response) => {
-  return res.status(200).json({ message: "Ok" });
-});
 
 Routes.get("/save", async (req: Request, res: Response) => {
   try {

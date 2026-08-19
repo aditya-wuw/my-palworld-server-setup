@@ -11,9 +11,19 @@ import { Commands } from "./src/commands/index.ts";
 import morgan from "morgan";
 import { Routes } from "./src/api/api.backup.ts";
 import { CheckSignature } from "./src/middleware.ts";
+import { rateLimit } from "express-rate-limit";
+import { Health } from "./src/api/api.health.ts";
 
 export const app: Express = express();
+const limiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 10 minutes
+  limit: 10,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
+});
 app.use(morgan("dev"));
+app.use(limiter);
 const PORT: number = 1000;
 export const SERVER_API =
   process.env.SERVER_BACKUP_API_ENDPOINT || "http://localhost:1000/v1";
@@ -28,6 +38,7 @@ Commands(client);
 client.login(process.env.DISCORD_BOT_TOKEN as string);
 
 /*routes*/
+app.use(Health);
 app.use("/api", CheckSignature, Routes);
 
 export const SendMessage = async (msg: string, success: boolean) => {

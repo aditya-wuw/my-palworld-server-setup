@@ -13,6 +13,7 @@ services:
       - SHARED_SIGNATURE=${SHARED_CLIENT_SIGNATURE}
     networks:
       - game-net
+
   palworld:
     image: thijsvanloef/palworld-server-docker:latest
     container_name: palworld-server
@@ -20,7 +21,7 @@ services:
     ports:
       - "8211:8211/udp"
       - "27015:27015/udp"
-      - "8212:8212/tcp"
+      - "127.0.0.1:8212:8212/tcp"
     environment:
       - PUID=1000
       - PGID=1000
@@ -42,6 +43,7 @@ services:
     networks:
       game-net:
         ipv4_address: 172.25.0.5
+
   playit:
     image: ghcr.io/playit-cloud/playit-agent:1.0
     container_name: playit
@@ -49,6 +51,15 @@ services:
     environment:
       - SECRET_KEY=${PLAY_IT_SECRET_KEY}
     network_mode: host
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command: http --url=hardened-task-chihuahua.ngrok-free.dev proxy-api:3000
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    networks:
+      - game-net
 
 networks:
   game-net:
