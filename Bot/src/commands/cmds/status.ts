@@ -14,8 +14,8 @@ interface FilteredPlayersType {
 }
 
 const status = async (interaction: ChatInputCommandInteraction<CacheType>) => {
-  const response = await fetch(`${SERVER_API}/getstatus`, {
-    headers: getHeaders("GET", "/getstatus"),
+  const response = await fetch(`${SERVER_API}/v1/getstatus`, {
+    headers: getHeaders("GET", "/v1/getstatus"),
   });
   if (!response.ok) {
     const errorData = await response.json();

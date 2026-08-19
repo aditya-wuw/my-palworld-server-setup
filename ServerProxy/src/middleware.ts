@@ -31,8 +31,8 @@ export const CheckSignature = (
   if (Math.abs(Date.now() - ParsedTimestamp) > 5 * 60 * 1000)
     return res.status(401).json({ message: "Request expired" });
 
-  // const requestPath = req.baseUrl ? `${req.baseUrl}${req.path}` : req.path;
-  const ExpectedSignKey = `${req.method.toUpperCase()}:${req.path}:${Timestamp}`;
+  const requestPath = req.baseUrl ? `${req.baseUrl}${req.path}` : req.path;
+  const ExpectedSignKey = `${req.method.toUpperCase()}:${requestPath}:${Timestamp}`;
 
   const ExpectedSignature = crypto
     .createHmac("sha256", SHARED_SIGNATURE)

@@ -7,6 +7,7 @@ export default function getHeaders(Method: MethodType, Path: string) {
 
   const Timestamp = Date.now().toString();
   const SignKey = `${Method}:${Path}:${Timestamp}`;
+  console.log("constructed Signkey: ", SignKey); //debug
   const Signature = crypto
     .createHmac("sha256", SHARED_SIGNATURE)
     .update(SignKey)

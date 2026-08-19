@@ -35,8 +35,8 @@ services:
       # only run this for the 1st time get download the latest version
       #- UPDATE_ON_BOOT=True
       - BACKUP_ENABLED=true
-      - BACKUP_CRON_EXPRESSION=0 * * * * #generate backup every hour
-      # - BACKUP_CRON_EXPRESSION=*/1 * * * * #for testing
+      # - BACKUP_CRON_EXPRESSION=0 * * * * #generate backup every hour
+      - BACKUP_CRON_EXPRESSION=*/1 * * * * #for testing
     volumes:
       - ./palworld:/palworld/
     networks:

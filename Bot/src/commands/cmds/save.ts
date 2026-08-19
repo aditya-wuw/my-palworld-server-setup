@@ -8,8 +8,8 @@ import getHeaders from "../../Headers.ts";
 
 const save = async (interaction: ChatInputCommandInteraction<CacheType>) => {
   await interaction.deferReply();
-  const response = await fetch(`${SERVER_API}/save`, {
-    headers: getHeaders("GET", "/getstatus"),
+  const response = await fetch(`${SERVER_API}/v1/save`, {
+    headers: getHeaders("GET", "/v1/save"),
   });
   if (!response.ok)
     return await interaction.editReply(
