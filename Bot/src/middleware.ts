@@ -9,7 +9,7 @@ export const CheckSignature = (
   next: NextFunction,
 ) => {
   if (!SHARED_SIGNATURE)
-    return SendResponse(res, 401, false, "Shared signature wasn't configured");
+    return SendResponse(res, 500, false, "Shared signature wasn't configured");
 
   const ProvidedSignature = req.get("-x-signature");
   const Timestamp = req.get("-x-timestamp");
@@ -17,13 +17,25 @@ export const CheckSignature = (
   if (!ProvidedSignature || !Timestamp)
     return SendResponse(res, 401, false, "Missing headers");
 
-  if (Math.abs(Date.now() - parseInt(Timestamp, 10)) > 5 * 60 * 100)
+  if (
+    ProvidedSignature.length !== 64 ||
+    !/^[0-9a-fA-F]+$/.test(ProvidedSignature)
+  )
+    return SendResponse(res, 401, false, "Invalid Signature provided");
+
+  const ParsedTimestamp = parseInt(Timestamp, 10);
+  if (isNaN(ParsedTimestamp))
+    return SendResponse(res, 401, false, "Invalid Timestamp");
+
+  if (Math.abs(Date.now() - ParsedTimestamp) > 5 * 60 * 1000)
     return SendResponse(res, 401, false, "Request expired");
 
-  const ExpectedkKey = `${req.method}:${req.path}:${Timestamp}`;
+  // const requestPath = req.baseUrl ? `${req.baseUrl}${req.path}` : req.path;
+  const ExpectedSignKey = `${req.method.toUpperCase()}:${req.path}:${Timestamp}`;
+
   const ExpectedSignature = crypto
-    .createHmac("sha256", ProvidedSignature)
-    .update(ExpectedkKey)
+    .createHmac("sha256", SHARED_SIGNATURE)
+    .update(ExpectedSignKey)
     .digest("hex");
 
   const ProvidedSigBuffer = Buffer.from(ProvidedSignature, "hex");
@@ -31,7 +43,7 @@ export const CheckSignature = (
 
   if (
     ProvidedSigBuffer.length !== ExpectedSigBuffer.length ||
-    crypto.timingSafeEqual(ProvidedSigBuffer, ExpectedSigBuffer)
+    !crypto.timingSafeEqual(ProvidedSigBuffer, ExpectedSigBuffer)
   )
     return SendResponse(res, 403, false, "Invalid signature");
 

@@ -14,7 +14,7 @@ interface FilteredPlayersType {
 
 const players = async (interaction: ChatInputCommandInteraction<CacheType>) => {
   const response = await fetch(`${SERVER_API}/getplayers`, {
-    headers: getHeaders("GET", "/getstatus"),
+    headers: getHeaders("GET", "v1/getstatus"),
   });
   if (!response.ok)
     return await interaction.reply(
