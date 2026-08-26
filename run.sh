@@ -3,7 +3,7 @@
 #simple shorthand run script
 echo -e "\n----------------------------------\nWelcome to Palworld Server client\n----------------------------------\n"
 while true; do
-    echo -e "make sure your docker client is running and use the following commands\n\n1. up - spin up Palworld server container along with playit.gg and backupAPI\n2. restart - restart Palworld server\n3. logs - watch palworld server logs\n4. proxy-logs - watch proxy api's logs 5. down - shut down the server and other containers \n6. exit - exit the app\n"
+    echo -e "make sure your docker client is running and use the following commands\n\n1. up - spin up Palworld server container along with playit.gg and backupAPI\n2. restart - restart Palworld server\n3. logs - watch palworld server logs\n4. proxy-logs - watch proxy api's logs\n5. down - shut down the server and other containers\n6. backup - trigger an ondemand backup \n7. exit - exit the app\n"
     read -p "Input> " cmd arg1
     case "$cmd" in
         up)
@@ -29,6 +29,9 @@ while true; do
             ;;
         down)
             docker compose down
+            ;;
+        backup)
+            docker exec palworld-server backup
             ;;
         clear)
             clear
