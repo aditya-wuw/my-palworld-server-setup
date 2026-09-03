@@ -37,6 +37,8 @@ services:
       - DISCORD_POST_UPDATE_BOOT_MESSAGE_ENABLED=true
       - DISCORD_PRE_START_MESSAGE_ENABLED=true
       - DISCORD_PLAYER_JOIN_MESSAGE_ENABLED=true
+      - DISCORD_POST_BACKUP_MESSAGE_ENABLED=false
+      - DISCORD_PRE_SHUTDOWN_MESSAGE_ENABLED=false
       # only run this for the 1st time get download the latest version
       #- UPDATE_ON_BOOT=True
       - BACKUP_ENABLED=true
