@@ -33,11 +33,15 @@ services:
       - SERVER_PASSWORD=${SERVER_PASS}
       - ADMIN_PASSWORD=${SERVER_ADMIN_PASS}
       - UPDATE_ON_BOOT=false
+      - DISCORD_WEBHOOK_URL=${DISCROD_WEBHOOK}
+      - DISCORD_POST_UPDATE_BOOT_MESSAGE_ENABLED=true
+      - DISCORD_PRE_START_MESSAGE_ENABLED=true
+      - DISCORD_PLAYER_JOIN_MESSAGE_ENABLED=true
       # only run this for the 1st time get download the latest version
       #- UPDATE_ON_BOOT=True
       - BACKUP_ENABLED=true
       - BACKUP_CRON_EXPRESSION=0 * * * * #generate backup every hour
-      # - BACKUP_CRON_EXPRESSION=*/1 * * * * #for testing
+    # - BACKUP_CRON_EXPRESSION=*/1 * * * * #for testing
     volumes:
       - ./palworld:/palworld/
     networks:
